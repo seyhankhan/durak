@@ -1,6 +1,6 @@
 {
 	"window.autoDetectColorScheme": true,
 	"workbench.preferredLightColorTheme": "clearTex",
-	"workbench.preferredDarkColorTheme": "AVC LaTeX Dark",
-	"workbench.colorTheme": "AVC LaTeX Dark"
+	"workbench.preferredDarkColorTheme": "One Dark Pro",
+	"workbench.colorTheme": "One Dark Pro"
 }
