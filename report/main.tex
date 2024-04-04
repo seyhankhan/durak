@@ -1,0 +1,42 @@
+\documentclass[a4paper, twoside, 12pt]{report}
+\usepackage{graphicx}
+
+
+% font?
+\title{Durak with Artificial Intelligence}
+\author{Seyhan Van Khan}
+\date{June 2024}
+\makeatletter
+
+\begin{document}
+
+\bibliographystyle{vancouver}
+
+\begin{titlepage}
+	\centering
+	{\huge \@title}
+	\includegraphics[width=5cm]{./imperial.png}
+	\vfill
+
+\end{titlepage}
+
+\section{Notes}
+
+A K Q J 10 9 8 7 6 \\
+A K Q J 10 9 8 7 6 \\
+A K Q J 10 9 8 7 6 \\
+A K Q J 10 9 8 7 6 (Trumps) \\
+\\
+8 unknown trumps, 1 known \\
+
+Talon: 24 cards (with 1 known trump) \\
+
+interesting thought - if we knew all the cards positions and opponents hands --- it would be a solved game right?
+
+\subsection*{Strategies}
+It's good to have a vertical collection (consecutive cards of same suit). It means u can attack the entire set one by one, without them replying. Controlling a suit forces opponent to lose trumps or take the cards. When attacking a set, start with the lowest, but skip one card in case you get attacked with them later on. That one card stops their momentum, and brings the tempo back to you.
+
+
+
+
+\end{document}
