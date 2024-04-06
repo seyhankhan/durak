@@ -1,9 +1,13 @@
+# Remove pdf?
+# *.pdf
+
 **/.DS_Store
 **/__pycache__
 
-.stack-work/
+durak/.stack-work/
 *.cabal
 *.s
+*.o
 
 ## Core latex/pdflatex auxiliary files:
 *.aux

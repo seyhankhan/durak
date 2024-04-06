@@ -1,0 +1,47 @@
+name:                durak
+version:             0.1.0.0
+github:              "seyhankhan/durak"
+author:              "Seyhan Van Khan"
+
+dependencies:
+- base >= 4.7 && < 5
+- random
+
+ghc-options:
+- -Wall
+- -Wcompat
+- -Widentities
+- -Wincomplete-record-updates
+- -Wincomplete-uni-patterns
+- -Wmissing-export-lists
+- -Wmissing-home-modules
+- -Wpartial-fields
+- -Wredundant-constraints
+- -fno-warn-incomplete-uni-patterns
+- -fno-warn-orphans
+
+library:
+  source-dirs:
+  - src
+
+executables:
+  durak-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - durak
+
+tests:
+  durak-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - durak
