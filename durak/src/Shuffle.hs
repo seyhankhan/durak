@@ -1,12 +1,15 @@
 module Shuffle (module Shuffle) where
 
-import System.Random (randomRIO)
+import System.Random (StdGen, randomR)
 
-shuffle :: [a] -> IO [a]
-shuffle l = shuffle' l []
-  where
-    shuffle' [] acc = return acc
-    shuffle' l acc = do
-      k <- randomRIO (0, length l - 1)
-      let (lead, x:xs) = splitAt k l
-      shuffle' (lead ++ xs) (x:acc)
+-- https://literateprograms.org/fisher-yates_shuffle__haskell_.html
+shuffle :: [a] -> StdGen -> ([a], StdGen)
+shuffle l gen = shuffle' l gen []
+ where
+  shuffle' [] g acc = (acc, g)
+  shuffle' l g acc =
+    let
+      (k, g') = randomR (0, length l - 1) g
+      (lead, x : xs) = splitAt k l
+     in
+      shuffle' (lead ++ xs) g' (x : acc)
