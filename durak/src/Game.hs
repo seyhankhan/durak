@@ -28,23 +28,22 @@ initGameState gen n = GameState talon players [] trump
   players = fromList (Player <$> [0 .. n - 1] <*> [[]])
 
 dealCards :: GameState -> GameState
-dealCards gs@GameState{players = [p], battlefield = []} = error "Only one player left?"
 dealCards gs@GameState{talon = t, players = Players ps def att, battlefield = []} =
   gs{talon = t', ps = Players (init ps') att' (last ps')}
  where
-  (att' : ps', t') = dealCards' (att : ps ++ [def]) t
+  (att' : ps', t') = dealRemainingCards (att : ps ++ [def]) t
 dealCards _ = error "Battlefield must be empty before dealing cards"
 
-dealCards' :: [Player] -> Talon -> ([Player], Talon)
-dealCards' [] talon = ([], talon)
-dealCards' ps [] = (ps, [])
-dealCards' (p : ps) talon = (p' : ps', talon')
+dealRemainingCards :: [Player] -> Talon -> ([Player], Talon)
+dealRemainingCards [] talon = ([], talon)
+dealRemainingCards ps [] = (ps, [])
+dealRemainingCards (p : ps) talon = (p' : ps', talon')
  where
-  (p', remainingTalon) = dealCards'' p talon
-  (ps', talon') = dealCards' ps remainingTalon
+  (p', remainingTalon) = drawCards p talon
+  (ps', talon') = dealRemainingCards ps remainingTalon
 
-dealCards'' :: Player -> Talon -> (Player, Talon)
-dealCards'' p talon
+drawCards :: Player -> Talon -> (Player, Talon)
+drawCards p talon
   | cardsToDraw <= 0 = (p, talon)
   | otherwise =
       let (takenCards, remainingTalon) = splitAt cardsToDraw talon

@@ -1,16 +1,23 @@
 module Player (module Player) where
 
-import Card (Card, Cards, Trump, isTrump, suit)
-import Data.List (findIndex, minimumBy)
+import Card (Card(Card), Cards, Hand, Trump, isTrump, suit)
+import Data.List (findIndex, minimumBy, sortBy)
 import Data.Maybe (isJust)
 import Data.Ord (comparing)
 
 type PlayerId = Int
 
-data Player = Player {pId :: PlayerId, hand :: Cards} deriving (Eq, Show)
+data Player = Player {pId :: PlayerId, name :: String, hand :: Hand} deriving (Eq)
+
+instance Show Player where
+  show (Player i n h) = show i ++ ":\t" ++ show (sortBy compareCards h)
+    where
+      compareCards (Card r s) (Card r' s')
+        | s == s' = compare r r'
+        | otherwise = compare s s'
 
 instance Ord Player where
-  compare (Player i _) (Player i' _) = compare i i'
+  compare Player{pId=i} Player{pId=i'} = compare i i'
 
 -- Players [2,3,4] 1 0
 --    2  3
