@@ -2,6 +2,9 @@ module Card (module Card) where
 
 import Data.Char (toUpper)
 
+maxHandSize :: Int
+maxHandSize = 6
+
 data Rank = Six | Seven | Eight | Nine | Ten | Jack | Queen | King | Ace
   deriving (Eq, Ord, Enum, Bounded)
 
@@ -11,7 +14,7 @@ instance Show Rank where
     Seven -> "7"
     Eight -> "8"
     Nine -> "9"
-    Ten -> "10"
+    Ten -> "T"
     Jack -> "J"
     Queen -> "Q"
     King -> "K"
@@ -29,6 +32,9 @@ instance Show Suit where
   show Hearts = "♥"
   show Diamonds = "♦"
 
+deck :: Cards
+deck = Card <$> [Nine .. Ace] <*> [Spades .. Diamonds]
+
 instance Read Suit where
   readsPrec _ input = case map toUpper input of
     "S" -> [(Spades, "")]
@@ -43,8 +49,8 @@ data Card = Card {rank :: Rank, suit :: Suit} deriving (Eq)
 
 instance Read Card where
   readsPrec _ input = [(Card (read rankStr :: Rank) (read suitStr :: Suit), "")]
-   where
-    (rankStr, suitStr) = splitAt (length input - 1) input
+    where
+      (rankStr, suitStr) = splitAt (length input - 1) input
 
 instance Ord Card where
   compare (Card r s) (Card r' s')
@@ -54,19 +60,26 @@ instance Ord Card where
 instance Show Card where
   show (Card r s) = show r ++ show s
 
---
-
 type Cards = [Card]
-type Talon = Cards
+
+type Talon = [Card]
+
 type Hand = Cards
 
 isTrump :: Trump -> Card -> Bool
 isTrump = (. suit) . (==)
 
-didAttackerWin :: Trump -> Card -> Card -> Bool
-didAttackerWin t a d = d > a || suit d == t && suit a /= t
+trumpCount :: Trump -> Hand -> Int
+trumpCount t cs = length $ filter (isTrump t) cs
 
-deck :: Cards
-deck = Card <$> [Six .. Ace] <*> [Spades .. Diamonds]
+cardOrder :: Suit -> Card -> Card -> Ordering
+cardOrder trump (Card r s) (Card r' s')
+  | s == trump && s /= s' = GT
+  | s' == trump && s' /= s = LT
+  | r == r' = compare s s'
+  | otherwise = compare r r'
 
---
+-- Strict Partial Order
+beats :: Suit -> Card -> Card -> Bool
+beats trump (Card r1 s1) (Card r2 s2) =
+  s1 == s2 && r1 > r2 || s1 == trump && s2 /= trump

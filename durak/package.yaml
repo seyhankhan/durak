@@ -6,6 +6,8 @@ author:              "Seyhan Van Khan"
 dependencies:
 - base >= 4.7 && < 5
 - random
+- containers
+- hspec
 
 ghc-options:
 - -Wall
