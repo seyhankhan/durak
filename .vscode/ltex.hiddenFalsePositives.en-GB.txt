@@ -1,0 +1,4 @@
+{"rule":"PASSIVE_VOICE","sentence":"^\\QStarting cards are randomly dealt and player's hands are hidden from others, except for what's revealed during attacks.\\E$"}
+{"rule":"PASSIVE_VOICE","sentence":"^\\QThe same reasoning can be applied to n-player Durak, as when cards reach another hand, the defender is skipped, and so unable to send the cards back to repeat a game state.\\E$"}
+{"rule":"PASSIVE_VOICE","sentence":"^\\QRank and Suit are defined as enumerations (allowing iteration) and bounded (having a minimum and maximum value).\\E$"}
+{"rule":"PASSIVE_VOICE","sentence":"^\\QThe author is also inspired by Bonnet's simple definition of a Durak position, using only the 2 hands and who goes next.\\E$"}
